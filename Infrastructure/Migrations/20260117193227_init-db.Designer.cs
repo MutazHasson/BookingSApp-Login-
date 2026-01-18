@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(BookingSAppContext))]
-    [Migration("20260117174950_init-db")]
+    [Migration("20260117193227_init-db")]
     partial class initdb
     {
         /// <inheritdoc />
@@ -265,7 +265,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -276,19 +276,19 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.ClientUser", "ClientUser")
                         .WithMany()
                         .HasForeignKey("ClientUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.ServiceProvider", "ServiceProvider")
                         .WithMany()
                         .HasForeignKey("ServiceProviderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ClientUser");
@@ -303,7 +303,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -314,7 +314,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.ServiceProvider", "ServiceProvider")
                         .WithMany()
                         .HasForeignKey("ServiceProviderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ServiceProvider");
@@ -325,13 +325,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.ServiceCategory", "ServiceCategory")
                         .WithMany()
                         .HasForeignKey("ServiceCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ServiceCategory");
@@ -344,7 +344,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
