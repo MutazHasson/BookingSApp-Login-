@@ -17,7 +17,8 @@ namespace Infrastructure.Data
         private readonly static string adminPassword = "Admin@123";  //Default admin password
         public static void UserSeed(IServiceProvider serviceProvider)  //It will take a parameter
         { 
-            using var context = serviceProvider.GetRequiredService<BookingSAppContext>();
+            using var scope = serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<BookingSAppContext>();
             //We use this code in places that, we cant make independancy injection without constructor 
             //Via above code, we cant add user
             //We have to add role first

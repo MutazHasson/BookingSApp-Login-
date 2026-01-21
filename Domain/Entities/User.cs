@@ -10,7 +10,7 @@ namespace Domain.Entities
     public class User
     {
         public int Id { get; set; }
-        [Required]  // Used the keyword requierd to make field manditory to enter data
+        [Required]  // Used the keyword requierd to make field manditory to enter data (Name NOT ID)
         [StringLength(500)] //StringLength is very important to avoid using or consumption of size in Database with no reason.  
         public string Name { get; set; }
         [Required]
@@ -27,7 +27,7 @@ namespace Domain.Entities
 
         public int RoleId { get; set; } //Connecting user with Role 
 
-        public Role Role { get; set; }
+        public Role Role { get; set; }  //To know what kind of role user has.
     }
 }
 

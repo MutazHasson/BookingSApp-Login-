@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initdb : Migration
+    public partial class AddBookingChanges : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -192,6 +194,23 @@ namespace Infrastructure.Migrations
                         principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ServiceCategories",
+                columns: new[] { "Id", "Code", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Pluming" },
+                    { 2, 2, "Electrical" },
+                    { 3, 3, "Cleaning" },
+                    { 4, 6, "Carpentry" },
+                    { 5, 4, "Landscaping" },
+                    { 6, 10, "Moving Services" },
+                    { 7, 7, "HVAC" },
+                    { 8, 8, "Roofing" },
+                    { 9, 5, "Painting" },
+                    { 10, 9, "PestControl" }
                 });
 
             migrationBuilder.CreateIndex(

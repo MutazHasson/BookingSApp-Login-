@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(BookingSAppContext))]
-    [Migration("20260117193227_init-db")]
-    partial class initdb
+    [Migration("20260119122606_AddBookingChanges")]
+    partial class AddBookingChanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -188,6 +188,68 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ServiceCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = 1,
+                            Name = "Pluming"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = 2,
+                            Name = "Electrical"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = 3,
+                            Name = "Cleaning"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = 6,
+                            Name = "Carpentry"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = 4,
+                            Name = "Landscaping"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = 10,
+                            Name = "Moving Services"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = 7,
+                            Name = "HVAC"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = 8,
+                            Name = "Roofing"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = 5,
+                            Name = "Painting"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = 9,
+                            Name = "PestControl"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ServiceProvider", b =>
