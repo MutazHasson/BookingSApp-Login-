@@ -11,7 +11,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         public int ServiceCategoryId { get; set; }
         public ServiceCategory ServiceCategory { get; set; }
-        public string UserId { get; set; }  // To create Foreign key
+        public int UserId { get; set; }  // To create Foreign key
 
         public User User { get; set; }    // To create Foreign key
 
