@@ -19,7 +19,7 @@ namespace BookingSApp.Controllers
             _authService = authService;
         }
 
-        //Post login
+        //Post login Methode
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
