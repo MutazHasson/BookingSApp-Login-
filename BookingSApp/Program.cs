@@ -1,5 +1,8 @@
 using Application.AppServices.AuthService;
 using Application.AppServices.AuthService.CurrentUserService;
+using Application.AppServices.ClientUserService.DTOs;
+using Application.AppServices.LookupService;
+using Application.AppServices.ServiceProviderService;
 using Application.Repositories;
 using Infrastructure.Context;
 using Infrastructure.Data;
@@ -77,6 +80,9 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
 builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
+builder.Services.AddScoped(typeof(IServiceProviderService), typeof(ServiceProviderService));
+builder.Services.AddScoped(typeof(IClientUserService), typeof(ClientUserService));  //Register ClientUserService in program.cs
+builder.Services.AddScoped(typeof(ILookupService), typeof(LookupService));  //Register DbContext in program.cs
 
 var app = builder.Build(); 
 UserSeedData.UserSeed(app.Services);  //From userSeedData

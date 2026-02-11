@@ -14,5 +14,6 @@ namespace Domain.Entities
         // A company Not User
         public int UsertId { get; set; }  // To create foreign key
         public User User { get; set; }  // To create foreign key
+        public int UserId { get; set; }
     }
 }

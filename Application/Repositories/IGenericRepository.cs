@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace Application.Repositories
         void Update(T entity);
         void Remove(T entity);
         Task <int> SaveChangesAsync();
+        Task InsertAsync(T entity);
     }
 }
 

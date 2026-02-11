@@ -26,9 +26,9 @@ namespace Infrastructure.Data
             {
                 var roles = new List<Role>
                 {
-                   new Role {Name = "Admin", Code = SystemRole.Admin},
-                   new Role { Name = "ServiceProvider", Code = SystemRole.ServiceProvider },
-                   new Role { Name = "User", Code = SystemRole.User }
+                   new Role {Name = SystemRole.Admin.ToString(), Code = SystemRole.Admin},
+                   new Role { Name = SystemRole.ServiceProvider.ToString(), Code = SystemRole.ServiceProvider },
+                   new Role { Name = SystemRole.User.ToString(), Code = SystemRole.User }
 
                 };
                 

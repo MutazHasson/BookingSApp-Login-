@@ -1,4 +1,5 @@
 ﻿using Application.Repositories;
+using Domain.Entities;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -34,6 +35,11 @@ namespace Infrastructure.RepositoriesInf
         {
             await _dbSet.AddAsync(entity);
         }
+        public async Task InsertAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+        }
+
 
         public void Update(T entity)
         {
@@ -52,11 +58,12 @@ namespace Infrastructure.RepositoriesInf
             return await _appContext.SaveChangesAsync();
         }
 
-      
-
-        
+       
     }
 }
 
 
 //After finishing => start with registeration in independancy injection lifeCycle in Program.cs
+
+
+//Project: 3 seasion 16 start with User (ServiceProviderService)
