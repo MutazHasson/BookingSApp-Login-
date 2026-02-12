@@ -22,17 +22,17 @@ namespace BookingSApp.Controllers
         public async Task<IActionResult> RegisterClientUser([FromBody] ClientUserRegisterationRequest request)
         {
 
-               await _clientUserService.ClientUserRegisterationAsync(request);  //Call the registration method from the service
+               //await _clientUserService.ClientUserRegisterationAsync(request);  //Call the registration method from the service
+               // return Ok("Client user registered successfully");
+            try
+            {
+                await _clientUserService.ClientUserRegisterationAsync(request);  //Call the registration method from the service
                 return Ok("Client user registered successfully");
-            //try
-            //{
-            //    await _clientUserService.ClientUserRegisterationAsync(request);  //Call the registration method from the service
-            //    return Ok("Client user registered successfully");
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);  //Return bad request with the error message if there is an exception
-            //}
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);  //Return bad request with the error message if there is an exception
+            }
         }
     }
 }

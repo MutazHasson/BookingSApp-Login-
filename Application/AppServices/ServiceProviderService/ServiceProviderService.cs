@@ -56,7 +56,7 @@ namespace Application.AppServices.ServiceProviderService
             var isEmailExist = await _userRepo.GetAll().AnyAsync(x => x.Email == request.Email);
             if (isEmailExist)  //If Email exist do the following
             {
-                throw new Exception("Emai;.already exists");
+                throw new Exception("Email already exists");
             }
             var isPhoneNumbrtExist = await _userRepo.GetAll().AnyAsync(x => x.PhoneNumber == request.PhoneNumber);
             if (isPhoneNumbrtExist)  //If PhoneNumber exist do the following

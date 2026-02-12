@@ -12,7 +12,7 @@ namespace Domain.Entities
 
         public string Token { get; set; }    
         public DateTime ExpiryDate { get; set; }
-        public int UsertId { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
     }
 }

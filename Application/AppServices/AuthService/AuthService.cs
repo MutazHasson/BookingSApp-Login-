@@ -55,7 +55,7 @@ namespace Application.AppServices.AuthService
             //Save RefreshToken of the user in table
             var refreshToken = new RefreshToken
             {
-                UsertId = user.Id,
+                UserId = user.Id,
                 Token = GenerateRefreshToken(),
                 ExpiryDate = DateTime.UtcNow.AddDays(7),
             };
@@ -91,7 +91,7 @@ namespace Application.AppServices.AuthService
             }
            var user = await _userRepository.GetAll()
                 .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Id == token.UsertId);
+                .FirstOrDefaultAsync(u => u.Id == token.UserId);
             return await GenerateAccessToken(user);
         }
         
