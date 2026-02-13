@@ -1,4 +1,5 @@
-﻿using Application.AppServices.ServiceProviderService.DTOs;
+﻿using Application.AppServices.AuthService.CurrentUserService;
+using Application.AppServices.ServiceProviderService.DTOs;
 using Application.Repositories;
 using Domain.Entities;
 using Domain.Enums;
@@ -17,12 +18,42 @@ namespace Application.AppServices.ServiceProviderService
         private readonly IGenericRepository<ServiceProvider> _serviceProviderRepo;
         private readonly IGenericRepository<User> _userRepo;
         private readonly IGenericRepository<Role> _roleRepo;
-        public ServiceProviderService(IGenericRepository<ServiceProvider> serviceProviderRepo, IGenericRepository<User> userRepo, IGenericRepository<Role> roleRepo)
+        private readonly ICurrentUserService _currentUserService; // Assuming you have a service to get the current user
+        public ServiceProviderService(IGenericRepository<ServiceProvider> serviceProviderRepo, IGenericRepository<User> userRepo, IGenericRepository<Role> roleRepo, ICurrentUserService currentUserService)
         {
             _serviceProviderRepo = serviceProviderRepo;
             _userRepo = userRepo;
             _roleRepo = roleRepo;
+            _currentUserService = currentUserService;
         }
+
+        public async Task<GetServiceProviderAccountResponse> GetServiceProviderAccount()
+        {
+            // Get the current user id from the current user service
+            var userId = _currentUserService.UserId;
+            // Get the service provider account information based on the user id
+            var serviceProvider = await _serviceProviderRepo.GetAll()
+                .Include(sp => sp.User)
+                .FirstOrDefaultAsync(sp => sp.UserId == userId);
+            if (serviceProvider == null)
+            {
+                throw new Exception("Service provider account not found");
+            }
+            // Map the service provider account information to the response DTO
+            // We can use AutoMapper here if we have it set up, but for simplicity, we'll do it manually
+            var response = new GetServiceProviderAccountResponse
+            {
+                Id = serviceProvider.Id,
+                Name = serviceProvider.User.Name,
+                Email = serviceProvider.User.Email,
+                PhoneNumber = serviceProvider.User.PhoneNumber,
+                //Password = serviceProvider.User.Password, // Note: In a real application, you should not return the password hash
+                serviceCategoryId = serviceProvider.ServiceCategoryId
+            };
+            return response;
+        }
+
+
 
         public async Task serviceProviderRegistration(ServiceProviderRegisterationRequest request)
         {  await RegistrationValidation(request);  //Call the validation method to check if the email or phone number already exist

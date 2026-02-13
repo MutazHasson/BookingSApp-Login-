@@ -9,6 +9,7 @@ namespace Application.AppServices.ClientUserService.DTOs
     public interface IClientUserService
     {
         Task ClientUserRegisterationAsync(ClientUserRegisterationRequest request);
-      
+        Task<GetClientUserResponse> GetClientUserAccountAsync();
+
     }
 }

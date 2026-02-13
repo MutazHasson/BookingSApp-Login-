@@ -1,4 +1,5 @@
-﻿using Application.AppServices.ServiceProviderService.DTOs;
+﻿using Application.AppServices.AuthService.CurrentUserService;
+using Application.AppServices.ServiceProviderService.DTOs;
 using Application.Repositories;
 using Domain.Entities;
 using Domain.Enums;
@@ -18,11 +19,13 @@ namespace Application.AppServices.ClientUserService.DTOs
         private readonly IGenericRepository<ClientUser> _clientUserRepo;
         private readonly IGenericRepository<User> _userRepo;
         private readonly IGenericRepository<Role> _roleRepo;
-        public ClientUserService(IGenericRepository<ClientUser> clientUserRepo, IGenericRepository<User> userRepo, IGenericRepository<Role> roleRepo)
+        private readonly ICurrentUserService _currentUserService;
+        public ClientUserService(IGenericRepository<ClientUser> clientUserRepo, IGenericRepository<User> userRepo, IGenericRepository<Role> roleRepo, ICurrentUserService currentUserService)
         {
             _clientUserRepo = clientUserRepo;
             _userRepo = userRepo;
             _roleRepo = roleRepo;
+            _currentUserService = currentUserService;
         }
 
         public async Task ClientUserRegisterationAsync(ClientUserRegisterationRequest request)
@@ -51,6 +54,28 @@ namespace Application.AppServices.ClientUserService.DTOs
             await _clientUserRepo.SaveChangesAsync();  //Save the changes to the database
         }
 
+        public async Task<GetClientUserResponse> GetClientUserAccountAsync()
+        {
+            // Get the current user id from the current user service
+            var userId = _currentUserService.UserId;
+            var clientUser = await _clientUserRepo.GetAll()
+                .Include(x => x.User)  //Include the related user entity to access the user properties
+                .FirstOrDefaultAsync(x => x.UserId == userId);  //Get the client user from the database by user id
+            if (clientUser == null)  //If the service provider is not found do the following
+            {
+                throw new Exception("Client user not found");
+            }
+            // If client user is found create a response object and return it
+            var response = new GetClientUserResponse  // Create a response object and map the properties from the client user entity USING AutoMapper or manually VIA DTO.
+            {
+                Id = clientUser.Id,
+                Name = clientUser.User.Name,  // Access the user name from the related user entity ClientUser.User because the name is stored in the user table
+                Email = clientUser.User.Email,
+                PhoneNumber = clientUser.User.PhoneNumber,
+                BirthDate = clientUser.BirthDate
+            };
+            return response;  //Return the response object
+        }
 
         private async Task RegistrationValidation(ClientUserRegisterationRequest request)
         {
