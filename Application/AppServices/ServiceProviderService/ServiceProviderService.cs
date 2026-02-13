@@ -81,18 +81,71 @@ namespace Application.AppServices.ServiceProviderService
 
         }
 
-        private async Task RegistrationValidation(ServiceProviderRegisterationRequest request)
+        // We can implement the update method later, for now we will just throw a not implemented exception
+        public async Task UpdateServiceProviderAccount(ServiceProviderRegisterationRequest request)
         {
-            // First: 8 validation) Check user IsExist or New
-            var isEmailExist = await _userRepo.GetAll().AnyAsync(x => x.Email == request.Email);
-            if (isEmailExist)  //If Email exist do the following
+            var userId = _currentUserService.UserId;  // Get the current user id from the current user service
+
+            await RegistrationValidation(request, userId);  // Call the validation method to check if the email or phone number already exist for other users excluding the current user
+
+            var user = await _userRepo.GetByIdAsync(userId.Value);  // Get the user from the database by id
+            var serviceProvider = await _serviceProviderRepo.GetAll().FirstOrDefaultAsync(x => x.UserId == userId);  // Get the client user from the database by user id
+            if (serviceProvider == null)
             {
-                throw new Exception("Email already exists");
+                throw new Exception("Client user not found");
             }
-            var isPhoneNumbrtExist = await _userRepo.GetAll().AnyAsync(x => x.PhoneNumber == request.PhoneNumber);
-            if (isPhoneNumbrtExist)  //If PhoneNumber exist do the following
+            if (user == null)  // If the user is not found do the following
             {
-                throw new Exception("Phone number already exists");
+                throw new Exception("User not found");
+            }
+            // Update the user properties with the new values from the request
+            user.Name = request.Name;
+            user.Email = request.Email;
+            user.PhoneNumber = request.PhoneNumber;
+            
+
+            _userRepo.Update(user);  // Update the user in the database
+            await _userRepo.SaveChangesAsync();  // Save the changes to the database
+
+            serviceProvider.ServiceCategoryId = request.serviceCategoryId;  // Update
+            _serviceProviderRepo.Update(serviceProvider);  // Update the client user in the database
+            await _serviceProviderRepo.SaveChangesAsync();  // Save the changes to the database
+        }
+
+
+
+
+        private async Task RegistrationValidation(ServiceProviderRegisterationRequest request, int? id = null)
+        {
+            if (id == null)
+            {
+                // First: 8 validation) Check user IsExist or New
+                var isEmailExist = await _userRepo.GetAll().AnyAsync(x => x.Email == request.Email);
+                if (isEmailExist)  //If Email exist do the following
+                {
+                    throw new Exception("Email already exists");
+                }
+                var isPhoneNumbrtExist = await _userRepo.GetAll().AnyAsync(x => x.PhoneNumber == request.PhoneNumber);
+                if (isPhoneNumbrtExist)  //If PhoneNumber exist do the following
+                {
+                    throw new Exception("Phone number already exists");
+                }
+            }
+            else
+            {
+                // Update validation
+                var isEmailExist = await _userRepo.GetAll().AnyAsync(x => x.Email == request.Email && x.Id != id.Value);
+                if (isEmailExist)  //If Email exist do the following
+                {
+                    throw new Exception("Email already exists");
+                }
+                var isPhoneNumbrtExist = await _userRepo.GetAll().AnyAsync(x => x.PhoneNumber == request.PhoneNumber && x.Id != id.Value);
+                if (isPhoneNumbrtExist)  //If PhoneNumber exist do the following
+                {
+                    throw new Exception("Phone number already exists");
+                }
+
+
             }
 
         }

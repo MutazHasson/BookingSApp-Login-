@@ -1,4 +1,5 @@
-﻿using Application.AppServices.ServiceProviderService.DTOs;
+﻿using Application.AppServices.ClientUserService.DTOs;
+using Application.AppServices.ServiceProviderService.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Application.AppServices.ServiceProviderService
         Task<GetServiceProviderAccountResponse> GetServiceProviderAccount(); // To get the account details of the service provider, WE will use current user id to get the details of the service provider
         // for security reason, we will not ask for the service provider id in the request, we will get it from the current user service, becaue we want to make sure that the service provider can only access
         // his own account details, and not the details of other service providers.
+        Task UpdateServiceProviderAccount(ServiceProviderRegisterationRequest request);
     }
 }
 

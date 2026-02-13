@@ -113,8 +113,6 @@ namespace Application.AppServices.ClientUserService.DTOs
 
 
 
-
-
         private async Task RegistrationValidation(ClientUserRegisterationRequest request, int? id = null)
         {
             if (id == null)

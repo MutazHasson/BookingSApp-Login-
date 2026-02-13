@@ -48,5 +48,23 @@ namespace BookingSApp.Controllers
                 return BadRequest(ex.Message);  //Return bad request with the error message if there is an exception
             }
         }
+
+        // Update service provider account is not implemented yet but it will be similar to the registration method with some differences in the validation and the update process
+        [Authorize(Roles = "ServiceProvider")]  // Require authorization to access this endpoint]
+        [HttpPut("UpdateMyAccount")]  //api/ServiceProvider/UpdateMyAccount
+        public async Task<IActionResult> UpdateServiceProviderAccount([FromBody] ServiceProviderRegisterationRequest request)
+        {
+            try
+            {
+                await _serviceProviderService.UpdateServiceProviderAccount(request);  //Call the method to update the service provider account details
+                return Ok("Service provider account updated successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);  //Return bad request with the error message if there is an exception
+            }
+
+
+        }
     }
 }
