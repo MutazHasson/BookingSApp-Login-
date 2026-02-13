@@ -10,6 +10,6 @@ namespace Application.AppServices.ClientUserService.DTOs
     {
         Task ClientUserRegisterationAsync(ClientUserRegisterationRequest request);
         Task<GetClientUserResponse> GetClientUserAccountAsync();
-
+        Task UpdateClientUserAccount(ClientUserRegisterationRequest request);
     }
 }

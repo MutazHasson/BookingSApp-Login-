@@ -20,13 +20,28 @@ namespace BookingSApp.Controllers
         }
 
         [AllowAnonymous]  // Allow anonymous access to this endpoint for registration
-        [HttpPost("register")]  //api/ServiceProvider/register
+        [HttpPost("Register")]  //api/ServiceProvider/register
         public async Task<IActionResult> RegisterServiceProvider([FromBody] ServiceProviderRegisterationRequest request)
         {
             try
             {
                 await _serviceProviderService.serviceProviderRegistration(request);  //Call the registration method from the service
                 return Ok("Service provider registered successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);  //Return bad request with the error message if there is an exception
+            }
+        }
+
+        [Authorize(Roles = "ServiceProvider")]  // Require authorization to access this endpoint
+        [HttpGet("GetAccount")]  //api/ServiceProvider/GetAccount or MyAccount
+        public async Task<IActionResult> GetServiceProviderAccount()
+        {
+            try
+            {
+                var response = await _serviceProviderService.GetServiceProviderAccount();  //Call the method to get the service provider account details
+                return Ok(response);  //Return the response object with the service provider account details
             }
             catch (Exception ex)
             {
