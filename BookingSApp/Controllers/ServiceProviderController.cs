@@ -51,7 +51,7 @@ namespace BookingSApp.Controllers
 
         // Update service provider account is not implemented yet but it will be similar to the registration method with some differences in the validation and the update process
         [Authorize(Roles = "ServiceProvider")]  // Require authorization to access this endpoint]
-        [HttpPut("UpdateMyAccount")]  //api/ServiceProvider/UpdateMyAccount
+        [HttpPut("UpdateAccount")]  //api/ServiceProvider/UpdateMyAccount
         public async Task<IActionResult> UpdateServiceProviderAccount([FromBody] ServiceProviderRegisterationRequest request)
         {
             try

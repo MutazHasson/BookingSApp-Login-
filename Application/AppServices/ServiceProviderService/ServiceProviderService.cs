@@ -102,7 +102,7 @@ namespace Application.AppServices.ServiceProviderService
             user.Name = request.Name;
             user.Email = request.Email;
             user.PhoneNumber = request.PhoneNumber;
-            
+
 
             _userRepo.Update(user);  // Update the user in the database
             await _userRepo.SaveChangesAsync();  // Save the changes to the database
