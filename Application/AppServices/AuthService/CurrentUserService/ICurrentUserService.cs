@@ -9,6 +9,7 @@ namespace Application.AppServices.AuthService.CurrentUserService
     public interface ICurrentUserService
     {
         int? UserId { get; }
+        int? ServiceProviderId { get; }
         string? Name { get; }
         string? Email { get; }
         string? MobilePhone { get; }

@@ -23,14 +23,16 @@ namespace Application.AppServices.AuthService
         private readonly IConfiguration _config;
         private readonly ICurrentUserService _currentUserService;
         private readonly IGenericRepository<User> _userRepository;  //Repo is crucial By adding <User> we can get User
+        private readonly IGenericRepository<ServiceProvider> _serviceProviderRepository;
         private readonly IGenericRepository<RefreshToken> _RefreshTokenRepository; //Using Refresh token Rep
         //Creating A AuthService Constructor
-        public AuthService(IGenericRepository<User> userRepository, IGenericRepository<RefreshToken> refreshTokenRepository, IConfiguration config, ICurrentUserService currentUserService)
+        public AuthService(IGenericRepository<User> userRepository, IGenericRepository<RefreshToken> refreshTokenRepository, IConfiguration config, ICurrentUserService currentUserService, IGenericRepository<ServiceProvider> serviceProviderRepository)
         {
             _userRepository = userRepository;
             _RefreshTokenRepository = refreshTokenRepository;
             _config = config;
             _currentUserService = currentUserService;
+            _serviceProviderRepository = serviceProviderRepository;
         }
 
         //Login Implementation
@@ -129,7 +131,11 @@ namespace Application.AppServices.AuthService
                 
             };
 
-         
+            var serviceProviderUser = _serviceProviderRepository.GetAll().FirstOrDefaultAsync(x => x.UserId == user.Id);
+            if (serviceProviderUser != null) //It returns null, otherwise we add new claim
+            {
+                claims.Add(new Claim("ServiceProviderId", serviceProviderUser.Id.ToString()));
+            }
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

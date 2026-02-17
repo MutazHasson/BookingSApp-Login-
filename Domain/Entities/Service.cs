@@ -12,7 +12,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         [StringLength(300)]
         public string Name { get; set; }
-        public int ServiceProviderId { get; set; }
+        public int ServiceProviderId { get; set; }  //Refers to The person who add Service
 
         public ServiceProvider ServiceProvider { get; set; }
 

@@ -24,6 +24,15 @@ namespace Infrastructure.Services.CurrentUserServices
             }
         }
 
+        // serviceProvider Id
+        public int? ServiceProviderId
+        {
+            get
+            {
+                return Convert.ToInt32(_httpContextAccessor.HttpContext?.User.FindFirst("ServiceProviderId")?.Value);
+            }
+        }
+
         public string? Name
         {
             get
