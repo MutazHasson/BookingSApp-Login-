@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.AppServices.Service.DTOs
 {
-    public class CreateServiceRequest   // DTO to create Service
+    public class GetServiceResponse
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Duration { get; set; }
         public decimal Price { get; set; }

@@ -15,7 +15,7 @@ namespace BookingSApp.Controllers
 
         [Authorize(Roles = "ServiceProvider")]
     [HttpPost("")]
-        public async Task<IActionResult> CreateService([FromBody] CreateServiceRequest request)
+        public async Task<IActionResult> CreateService([FromBody] SaveServiceRequest request)
         {
             await _servicesService.CreateService(request);
             return Ok();
